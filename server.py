@@ -1,5 +1,10 @@
 import os
 from flask import Flask, request, jsonify, send_from_directory
+from dotenv import load_dotenv
+
+# Load environment variables from .env (project-local)
+load_dotenv()
+
 
 app = Flask(__name__)
 
@@ -16,18 +21,61 @@ def load_personality() -> str:
 
 
 def generate_response(user_text: str) -> str:
-    # Placeholder brain. Next iteration: replace with real ADK/Python LLM integration.
     personality = load_personality()
+
     if not user_text.strip():
         return "Say something and I’ll answer out loud."
 
-    # Simple personality-tinted echo.
-    # Keep it short for the mouth animation.
-    if user_text.lower().startswith("hi") or "hello" in user_text.lower():
-        return "Hi! I’m here. What would you like to talk about?"
+    # -------- ADK/Python LLM integration (OpenAI-compatible) --------
+    # Env vars:
+    # - OPENAI_API_KEY (required)
+    # - OPENAI_MODEL (optional, default: gpt-4o-mini)
+    # - OPENAI_BASE_URL (optional for compatible endpoints)
+    api_key = os.environ.get("OPENAI_API_KEY")
+    model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
 
-    # Include a tiny bit of character without being too verbose.
-    return f"I heard you: '{user_text.strip()}'. Tell me more!"
+    if not api_key:
+        # Keep app usable without keys.
+        if user_text.lower().startswith("hi") or "hello" in user_text.lower():
+            return "Hi! I’m here. Add an OPENAI_API_KEY to enable real intelligence."
+        return "I’m not connected to a language model yet. Set OPENAI_API_KEY to enable full responses."
+
+    try:
+        from openai import OpenAI
+
+        base_url = os.environ.get("OPENAI_BASE_URL")
+        client_kwargs = {"api_key": api_key}
+        if base_url:
+            client_kwargs["base_url"] = base_url
+
+        client = OpenAI(**client_kwargs)
+
+        messages = []
+        if personality:
+            messages.append({"role": "system", "content": personality})
+
+        # Keep it short for mouth animation.
+        messages.append(
+            {
+                "role": "user",
+                "content": user_text.strip(),
+            }
+        )
+
+        resp = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=0.7,
+        )
+
+        content = (resp.choices[0].message.content or "").strip()
+        return content if content else "Got it."
+    except Exception as e:
+        # Avoid breaking the UI, but expose useful info during development.
+        err = str(e)
+        if "429" in err or "quota" in err:
+            return "I’m connected, but my API quota is exhausted (429). Check billing/plan and try again."
+        return "I tried to think, but something went wrong. Try again."
 
 
 @app.route("/chat", methods=["POST"])

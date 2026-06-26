@@ -20,17 +20,52 @@ From the project folder:
 ```bash
 cd "d:\Python\PY Projects\AI Companion"
 python -m pip install flask==3.0.3
+
+# (Optional) If using the backend with Ollama/OpenAI-compatible LLM
+python -m pip install openai requests beautifulsoup4 lxml
+
 ```
+
+### Enable real intelligence (LLM)
+The backend uses an **OpenAI-compatible** chat-completions endpoint.
+
+#### Option A) Local Ollama (free)
+1) Make sure Ollama is running.
+2) Install a model in Ollama (example: `llama3.2:1b`).
+3) The project already includes a project-local `.env` configured for Ollama:
+- `OPENAI_BASE_URL=http://localhost:11434/v1`
+- `OPENAI_API_KEY=ollama` (dummy)
+- `OPENAI_MODEL=llama3.2:1b`
+
+#### Option B) OpenAI API (paid)
+Set environment variables:
+- `OPENAI_API_KEY` (required)
+- `OPENAI_MODEL` (optional, default: `gpt-4o-mini`)
+- `OPENAI_BASE_URL` (optional, if using a compatible provider)
+
+Example (Windows):
+
+```bat
+set OPENAI_API_KEY=your_key_here
+```
+
+If `OPENAI_API_KEY` is not set, the UI will still work, but you’ll get a message telling you to add the key.
+
 
 ## Run
 Start the backend:
 
 ```bash
-cd "d:\Python\PY Projects\AI Companion" && python server.py
+cd "d:\Python\PY Projects\AI Companion" && .venv\Scripts\python server.py
 ```
+
 
 The server runs on:
 - http://127.0.0.1:5000
+
+> If you want to use Ollama, ensure your model is available in Ollama:
+> - http://localhost:11434/v1/models
+
 
 ## Use
 1. Open `index.html` in your browser.
@@ -58,7 +93,6 @@ Returns:
 ```
 
 ## Next steps (planned)
-- Replace the placeholder “brain” in `server.py` with a real ADK/Python LLM integration
 - Add “superpowers” via tool endpoints (internet search, etc.)
 - Generate a unique avatar asset
 

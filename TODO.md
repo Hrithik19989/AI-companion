@@ -11,19 +11,27 @@
   - [ ] Load personality from `system_prompt.txt`
   - [ ] Generate response (placeholder first)
 
-- [ ] Step 3: Wire frontend -> backend `/chat`
-  - [ ] Send user message
-  - [ ] Render AI response text
-  - [ ] Speak response out loud and animate mouth
+- [x] Step 3: Wire frontend -> backend `/chat`
+  - [x] Send user message
+  - [x] Render AI response text
+  - [x] Speak response out loud and animate mouth
 
 - [x] Step 4: Run & verify end-to-end
   - [x] Start backend
   - [ ] Open frontend in browser
 
+- [ ] Step 5: Replace placeholder brain with real ADK/Python LLM integration
+  - [ ] Add LLM client to `server.py`
+  - [ ] Inject `system_prompt.txt`
+  - [ ] Add basic conversation history
 
-- [ ] Step 5 (next iteration): Replace placeholder brain with ADK/Python LLM integration
+- [ ] Step 6: Add tools (internet access/search) endpoint + LLM tool calling
+  - [ ] Add `GET /tools/search?q=...`
+  - [ ] Add tool usage guidance to `system_prompt.txt`
 
-- [ ] Step 6 (next iteration): Add tools (internet access/search) endpoint + UI
+- [ ] Step 7: Add avatar generation pipeline
+  - [ ] Generate unique avatar asset (SVG/PNG)
+  - [ ] Serve it from Flask and render in `index.html`
 
-- [ ] Step 7 (next iteration): Add avatar generation pipeline
+- [ ] Step 8: Update README with env var setup (LLM key)
 
