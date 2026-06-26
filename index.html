@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Companion Puppet</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="stage">
+      <div class="avatar" aria-label="Puppet face">
+        <div class="eye eye--left"></div>
+        <div class="eye eye--right"></div>
+
+        <div id="mouth" class="mouth" aria-hidden="true">
+          <div class="mouth__inner"></div>
+        </div>
+      </div>
+
+      <div class="caption">
+        <div class="name">Puppet Companion</div>
+        <div class="status" id="status">Ready.</div>
+      </div>
+    </section>
+
+    <section class="chat">
+      <div class="chat__log" id="chatLog" role="log" aria-live="polite"></div>
+
+      <form class="chat__composer" id="composer">
+        <input
+          id="messageInput"
+          class="chat__input"
+          type="text"
+          placeholder="Type a message..."
+          autocomplete="off"
+        />
+        <button class="chat__send" type="submit">Send</button>
+      </form>
+
+      <div class="hint">
+        Voice + mouth animation uses your browser’s Web Speech features.
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
+

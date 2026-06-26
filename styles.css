@@ -1,0 +1,197 @@
+:root{
+  --bg:#0b1020;
+  --panel:#121a33;
+  --text:#e9eefc;
+  --muted:#aab3d6;
+  --accent:#6ae4ff;
+  --accent2:#a78bfa;
+  --shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  background: radial-gradient(1000px 600px at 20% 10%, rgba(106,228,255,.18), transparent 55%),
+              radial-gradient(900px 500px at 80% 20%, rgba(167,139,250,.18), transparent 50%),
+              var(--bg);
+  color:var(--text);
+}
+
+.app{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 16px;
+  display:grid;
+  grid-template-columns: 420px 1fr;
+  gap: 18px;
+  align-items:start;
+}
+
+.stage{
+  background: rgba(18,26,51,.72);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.avatar{
+  position:relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(106,228,255,.20), rgba(167,139,250,.15));
+  border: 1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+}
+
+.avatar::after{
+  content:"";
+  position:absolute;
+  inset:-40px;
+  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.18), transparent 40%);
+  pointer-events:none;
+}
+
+.eye{
+  position:absolute;
+  top: 32%;
+  width: 18%;
+  height: 18%;
+  background: rgba(0,0,0,.35);
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,.10);
+}
+.eye::before{
+  content:"";
+  position:absolute;
+  left: 26%;
+  top: 24%;
+  width: 35%;
+  height: 35%;
+  background: rgba(106,228,255,.9);
+  border-radius: 999px;
+  filter: drop-shadow(0 0 6px rgba(106,228,255,.6));
+}
+
+.eye--left{left: 18%;}
+.eye--right{right: 18%;}
+
+.mouth{
+  position:absolute;
+  left: 50%;
+  top: 64%;
+  transform: translateX(-50%);
+  width: 36%;
+  height: 16%;
+  border-radius: 0 0 40px 40px;
+  background: rgba(0,0,0,.38);
+  border: 2px solid rgba(255,255,255,.10);
+  overflow:hidden;
+}
+
+.mouth__inner{
+  position:absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 50%;
+  width: 70%;
+  height: 10%;
+  background: rgba(106,228,255,.25);
+  border-radius: 0 0 30px 30px;
+  transform-origin: center top;
+  transition: height 80ms linear;
+}
+
+/* Mouth animation states */
+.mouth.is-speaking .mouth__inner{
+  animation: mouthChop 120ms infinite alternate;
+}
+
+@keyframes mouthChop{
+  from{height: 10%;}
+  to{height: 70%;}
+}
+
+.caption{margin-top: 14px;}
+.name{font-weight: 800; letter-spacing:.2px;}
+.status{margin-top: 6px; color: var(--muted); font-size: .95rem;}
+
+.chat{
+  background: rgba(18,26,51,.72);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.chat__log{
+  height: 420px;
+  overflow:auto;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(0,0,0,.15);
+}
+
+.msg{
+  margin: 10px 0;
+  display:flex;
+}
+.msg__bubble{
+  max-width: 85%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  line-height: 1.25;
+  white-space: pre-wrap;
+}
+
+.msg--user{justify-content:flex-end;}
+.msg--user .msg__bubble{
+  background: linear-gradient(145deg, rgba(106,228,255,.22), rgba(0,0,0,.05));
+  border: 1px solid rgba(106,228,255,.22);
+}
+
+.msg--bot{justify-content:flex-start;}
+.msg--bot .msg__bubble{
+  background: linear-gradient(145deg, rgba(167,139,250,.18), rgba(0,0,0,.05));
+  border: 1px solid rgba(167,139,250,.22);
+}
+
+.chat__composer{
+  display:flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.chat__input{
+  flex:1;
+  background: rgba(0,0,0,.2);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: 12px;
+  color: var(--text);
+  outline: none;
+}
+
+.chat__send{
+  background: linear-gradient(135deg, rgba(106,228,255,.95), rgba(167,139,250,.85));
+  border: none;
+  color: #071019;
+  font-weight: 800;
+  border-radius: 12px;
+  padding: 12px 16px;
+  cursor:pointer;
+}
+
+.chat__send:disabled{opacity:.55; cursor:not-allowed;}
+
+.hint{margin-top:10px; color: var(--muted); font-size: .9rem;}
+
+@media (max-width: 900px){
+  .app{grid-template-columns: 1fr;}
+  .chat__log{height: 320px;}
+}
+
